@@ -9,7 +9,7 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeDetailComponent implements OnInit {
   recipe = undefined;
-  id: Number;
+  id: number;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute ) { }
 
@@ -22,5 +22,9 @@ export class RecipeDetailComponent implements OnInit {
 
   onAddToShoppingList(){
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients)
+  }
+
+  onDeleteRecipe(){
+    this.recipeService.deleteRecipe(this.id)
   }
 }
