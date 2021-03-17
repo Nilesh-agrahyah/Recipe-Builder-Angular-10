@@ -14,9 +14,9 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li routerLinkActive="active"><a routerLink="/recipes">Recipes<span class="sr-only">(current)</span></a></li>
-          <li routerLinkActive="active"><a routerLink="/auth">Authenticate</a></li>
-          <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
+          <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="/recipes">Recipes<span class="sr-only">(current)</span></a></li>
+          <li routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="/auth">Authenticate</a></li>
+          <li routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="/shopping-list">Shopping List</a></li>
           <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -37,7 +37,10 @@
           <button type="submit" class="btn btn-default">Submit</button>
         </form> -->
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown" appDropdownDirective>
+          <li *ngIf="isAuthenticated">
+            <a style="cursor: pointer;">Logout</a>
+          </li>
+          <li class="dropdown" appDropdownDirective *ngIf="isAuthenticated">
             <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
