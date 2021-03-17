@@ -7,46 +7,45 @@ import { AuthService } from './auth.service';
     templateUrl: './auth.component.html'
 })
 
-export class AuthComponent implements OnInit{
+export class AuthComponent implements OnInit {
     isLoginMode = true;
-    isLoading=false;
-    error:string=null;
+    isLoading = false;
+    error: string = null;
 
-    constructor(private authService: AuthService){}
-    ngOnInit(){
+    constructor(private authService: AuthService) { }
+    ngOnInit() {
 
     }
 
-    onSwitchLoading(){
+    onSwitchLoading() {
         this.isLoading = !this.isLoading;
     }
 
-    onSwitchMode(){
+    onSwitchMode() {
         this.isLoginMode = !this.isLoginMode;
     }
-    onSubmit(form: NgForm){
-        if(form.invalid){
+    onSubmit(form: NgForm) {
+        if (form.invalid) {
             return;
         }
         this.onSwitchLoading()
         const email = form.value.email;
         const password = form.value.password;
 
-        if(this.isLoginMode){
-            
+        if (this.isLoginMode) {
+
         }
-        else{
-            this.authService.signup(email, password).subscribe( res => {
+        else {
+            this.authService.signup(email, password).subscribe(res => {
                 console.log(res);
                 this.onSwitchLoading()
             },
-            err => {
-                console.log(err);
-                this.onSwitchLoading()
-                this.error = 'An error occured';
-            })
+                errMsg => {
+                    this.error = errMsg
+                    this.onSwitchLoading()
+                })
         }
-        
+
         form.reset()
     }
 }
