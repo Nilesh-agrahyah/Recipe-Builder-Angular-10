@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
+import { Router } from '@angular/router'
 import { User } from './user.model';
 
 export interface AuthResponseData {
@@ -18,13 +19,13 @@ export interface AuthResponseData {
 export class AuthService {
     user = new BehaviorSubject<User>(null);
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
     signup(email: string, password: string) {
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDjPGKKrQxsODxouJxy7p20DmmbcTkk5TA', {
             email: email,
             password: password,
             returnSecureToken: true
-        }).pipe(catchError(this.handdleError), tap( res => {
+        }).pipe(catchError(this.handdleError), tap(res => {
             const { email, localId, idToken, expiresIn } = res
             this.handleAuthentication(email, localId, idToken, +expiresIn)
         }))
@@ -35,16 +36,22 @@ export class AuthService {
             email: email,
             password: password,
             returnSecureToken: true
-        }).pipe(catchError(this.handdleError), tap( res => {
+        }).pipe(catchError(this.handdleError), tap(res => {
             const { email, localId, idToken, expiresIn } = res
             this.handleAuthentication(email, localId, idToken, +expiresIn)
         }))
     }
 
-    private handleAuthentication(email:string, userId:string, token: string, expiresIn: number){
+
+    logout() {
+        this.user.next(null)
+        this.router.navigate(['/auth'])
+    }
+
+    private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
         const experationDate = new Date(new Date().getTime() + expiresIn * 1000);
-            const user = new User(email, userId, token, experationDate)
-            this.user.next(user);
+        const user = new User(email, userId, token, experationDate)
+        this.user.next(user);
     }
 
     private handdleError(errRes: HttpErrorResponse) {
