@@ -4,8 +4,13 @@
     </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" style="height: 40vh; overflow-y: auto;">
     <div class="col-xs-12">        
         <app-recipe-item *ngFor="let rec of recipes; let i = index" [recipe]="rec" [index]="i" ></app-recipe-item>
+        
+        <div class="alert alert-info" *ngIf="recipes.length == 0">            
+            <strong>No recipes found!</strong> Try adding new recipe or fetch stored recipes from Manage > Fetch Data...
+        </div>
+        
     </div>
 </div>

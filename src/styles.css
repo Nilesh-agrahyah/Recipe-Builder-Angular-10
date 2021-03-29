@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 body{
-    background-image: url('assets/baking-background.jpg');
-    /* filter: blur(8px); */
+    background:  linear-gradient(rgba(2, 2, 2, 0.342),rgba(2, 2, 2, 0.342)),url('assets/cooking.jpg');
     background-size: cover;
-    /* background-color: rgba(0,0,0,.03); */
 }
