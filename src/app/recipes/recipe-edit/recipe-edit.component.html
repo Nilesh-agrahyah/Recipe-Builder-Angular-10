@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Name:</label>
                         <input formControlName="name" type="text" name="name" class="form-control">
                     </div>
                 </div>
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label for="imagePath">Image URL</label>
+                        <label for="imagePath">Image URL:</label>
                         <input formControlName="imagePath" type="text" name="imagePath" class="form-control">
                     </div>
                 </div>
@@ -31,12 +31,12 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label for="description">Description</label>
+                        <label for="description">Description:</label>
                         <textarea formControlName="description" type="text" name="description" class="form-control" rows="6"></textarea>
                     </div>
                 </div>
             </div>
-            <label>Ingredients</label>
+            <label>Ingredients:</label>
             <div class="row" formArrayName="ingredients">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="row" *ngFor="let ing of controls; let i = index" [formGroupName]="i" style="margin-top: 10px;">
@@ -54,6 +54,28 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <button type="button" class="btn btn-success" (click)="onAddIngredient()">Add Ingredient</button>
+                        </div>
+                    </div>
+                </div>                
+            </div><br>
+            <label>Steps:</label>
+            <div class="row" formArrayName="steps">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="row" *ngFor="let ing of stepControls; let i = index" [formGroupName]="i" style="margin-top: 10px;">
+                        <div class="col-xs-10">
+                            <input type="text" placeholder="Name" formControlName="name" class="form-control"><br>
+                            <textarea placeholder="Description" formControlName="description" class="form-control" rows="3"></textarea>
+                        </div>
+                        <!-- <div class="col-xs-5">
+                        </div> -->
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-danger" (click)="onStepDelete(i)" >X</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <button type="button" class="btn btn-success" (click)="onAddStep()">Add Step</button>
                         </div>
                     </div>
                 </div>                

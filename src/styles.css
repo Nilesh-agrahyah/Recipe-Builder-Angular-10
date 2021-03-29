@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background-image: url('assets/baking-background.jpg');
+    /* filter: blur(8px); */
+    background-size: cover;
+    /* background-color: rgba(0,0,0,.03); */
+}

@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { Router } from '@angular/router'
 import { User } from './user.model';
-
+import { environment } from '../../environments/environment';
 export interface AuthResponseData {
     idToken: string,
     email: string,
@@ -22,7 +22,7 @@ export class AuthService {
 
     constructor(private http: HttpClient, private router: Router) { }
     signup(email: string, password: string) {
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDjPGKKrQxsODxouJxy7p20DmmbcTkk5TA', {
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseApiKey, {
             email: email,
             password: password,
             returnSecureToken: true
@@ -33,7 +33,7 @@ export class AuthService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDjPGKKrQxsODxouJxy7p20DmmbcTkk5TA', {
+        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='  + environment.firebaseApiKey, {
             email: email,
             password: password,
             returnSecureToken: true
@@ -48,7 +48,7 @@ export class AuthService {
         this.user.next(null)
         this.router.navigate(['/auth'])
         localStorage.removeItem('userData');
-        if(this.tokenExpirationTimer){
+        if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer)
         }
         this.tokenExpirationTimer = null;
@@ -62,7 +62,7 @@ export class AuthService {
         const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate))
         if (loadedUser.token) {
             this.user.next(loadedUser);
-            const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime() 
+            const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime()
             this.autoLogout(expirationDuration)
         }
     }
@@ -70,8 +70,8 @@ export class AuthService {
     autoLogout(expirationDuration: number) {
         // console.log(expirationDuration);
         this.tokenExpirationTimer = setTimeout(() => {
-                this.logout()
-            }, expirationDuration)
+            this.logout()
+        }, expirationDuration)
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {

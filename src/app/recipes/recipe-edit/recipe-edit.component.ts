@@ -28,6 +28,7 @@ export class RecipeEditComponent implements OnInit {
     let recipeImagePath='';
     let recipeDescription='';
     let recipeIgredients = new FormArray([]);
+    let recipeSteps = new FormArray([]);
 
     if(this.editMode){
       const recipe = this.recipeService.getRecipe(this.id)
@@ -44,17 +45,32 @@ export class RecipeEditComponent implements OnInit {
           )
         }
       }
+      if(recipe.steps){
+        for(let step of recipe.steps){
+          recipeSteps.push( 
+            new FormGroup({
+              'name': new FormControl(step.name, Validators.required),
+              'description': new FormControl(step.description, [Validators.required])
+            })
+          )
+        }
+      }
     }
     this.recipeForm = new FormGroup({
       'name': new FormControl(recipeName, Validators.required),
       'imagePath': new FormControl(recipeImagePath, Validators.required),
       'description': new FormControl(recipeDescription, Validators.required),
-      'ingredients': recipeIgredients
+      'ingredients': recipeIgredients,
+      'steps': recipeSteps
     })
   }
 
   get controls() { // a getter!
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
+  }
+
+  get stepControls(){
+    return (<FormArray>this.recipeForm.get('steps')).controls;
   }
 
   onAddIngredient(){
@@ -70,10 +86,24 @@ export class RecipeEditComponent implements OnInit {
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index)
   }
 
+  onAddStep(){
+    (<FormArray>this.recipeForm.get('steps')).push(
+      new FormGroup({
+        'name': new FormControl('', Validators.required),
+        'description': new FormControl('', [Validators.required])
+      })
+    )
+  }
+
+  onStepDelete(index: number){
+    (<FormArray>this.recipeForm.get('steps')).removeAt(index)
+  }
+
+
   onSubmit(){
     // console.log(this.recipeForm.value);
-    let { name, description, imagePath, ingredients } = this.recipeForm.value;
-    const newRecipe = new Recipe(name, description, imagePath, ingredients)
+    let { name, description, imagePath, ingredients, steps } = this.recipeForm.value;
+    const newRecipe = new Recipe(name, description, imagePath, ingredients, steps)
     if(this.editMode){
       this.recipeService.updateRecipe( this.id, newRecipe)
     }
