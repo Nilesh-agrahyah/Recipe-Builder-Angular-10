@@ -20,14 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     ],
     imports: [
         RouterModule, CommonModule, ReactiveFormsModule
-    ],
-    exports: [
-        RecipesComponent,
-        RecipeListComponent,
-        RecipeDetailComponent,
-        RecipeItemComponent,
-        RecipeStartComponent,
-        RecipeEditComponent,
     ]
 })
 

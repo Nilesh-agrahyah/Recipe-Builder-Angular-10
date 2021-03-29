@@ -5,8 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
+
 import { DropdownDirectiveDirective } from './directives/dropdown-directive.directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,12 +18,12 @@ import {AlertComponent} from './shared/alert/alert.component'
 import { RecipiesModule } from './recipes/recipes.module'
 import { RecipesRoutingModule } from './recipes/recipes-routing.module'
 
+import {ShoppingListModule} from'./shopping-list/shopping-list.module'
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
     DropdownDirectiveDirective,
     AuthComponent,
     LoadingSpinnerComponent,
@@ -37,7 +36,8 @@ import { RecipesRoutingModule } from './recipes/recipes-routing.module'
     HttpClientModule,
     AppRoutingModule,
     RecipiesModule,
-    RecipesRoutingModule
+    RecipesRoutingModule,
+    ShoppingListModule
   ],
   providers: [ShoppingListService, RecipeService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
