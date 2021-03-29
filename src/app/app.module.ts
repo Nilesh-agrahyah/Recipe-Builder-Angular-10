@@ -17,6 +17,7 @@ import { AuthInterceptorService } from './auth/auth-intercepter.service'
 import {AlertComponent} from './shared/alert/alert.component'
 
 import { RecipiesModule } from './recipes/recipes.module'
+import { RecipesRoutingModule } from './recipes/recipes-routing.module'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RecipiesModule } from './recipes/recipes.module'
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    RecipiesModule
+    RecipiesModule,
+    RecipesRoutingModule
   ],
   providers: [ShoppingListService, RecipeService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
