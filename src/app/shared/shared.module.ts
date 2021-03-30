@@ -3,12 +3,14 @@ import {CommonModule} from '@angular/common';
 
 import {AlertComponent} from '../shared/alert/alert.component'
 import {LoadingSpinnerComponent} from '../shared/loading-spinner/loading-spinner.component'
+import {TruncatePipe} from '../shared/truncatePipe/truncate.pipe'
 import {DropdownDirectiveDirective} from '../directives/dropdown-directive.directive'
 @NgModule({
     declarations: [
         AlertComponent,
         LoadingSpinnerComponent,
-        DropdownDirectiveDirective
+        DropdownDirectiveDirective,
+        TruncatePipe
     ],
     imports: [ CommonModule],
 
@@ -16,6 +18,7 @@ import {DropdownDirectiveDirective} from '../directives/dropdown-directive.direc
         AlertComponent,
         LoadingSpinnerComponent,
         DropdownDirectiveDirective,
+        TruncatePipe,
         CommonModule
     ]    
 })
