@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { DataStorageService } from '../shared/data-storage.service';
+import { RecipeService } from './recipe.service';
 
 @Component({
   selector: 'app-recipes',
@@ -7,9 +11,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecipesComponent implements OnInit {
   selectedRecipe = undefined;
-  constructor() { }
+  loading = false;
+  message = null;
+  recipeSub: Subscription;
+  constructor(private dataStorageService: DataStorageService, private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    if (this.recipeService.getRecipes().length == 0) {
+      this.loading = true
+      this.recipeSub = this.dataStorageService.fetchRecipes().pipe(take(1)).subscribe(res => {
+        this.loading = false        
+      },
+        err => {
+          this.loading = false
+        })
+    }
   }
 
 }

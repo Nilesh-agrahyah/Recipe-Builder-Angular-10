@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" *ngIf="!loading; else loader">
     
     <div class="col-md-5 col-lg-5">
         <app-recipe-list></app-recipe-list>
@@ -10,4 +10,12 @@
     </div>
     
 </div>
+
+<ng-template #loader>
+    <div class="row">
+        <div class="col-md-12">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+    </div>
+</ng-template>
 
